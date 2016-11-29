@@ -1,0 +1,44 @@
+.plugin_labeled li {
+    text-decoration:none;
+    border-style: solid;
+    margin: -1em 1em 2em 1em; 		/*geändert*/
+    border-radius: .5em;
+    -moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+    list-style-type:none;
+	text-align: center; 			/*hinzugefügt*/
+}
+
+.plugin_labeled li.labeled_inactive {
+    border-width: 1px;
+    padding: 6px;
+    border-color: #ccc;
+    color: #ccc;
+}
+
+.plugin_labeled li.labeled_active {
+    border-width: 0;
+    padding:7px;
+    background-color: #9c9;
+    color:#fff;
+    font-weight: bold;
+}
+
+/*.plugin_labeled li a {		
+    display:block;
+}
+	- weg, damit es nicht mehr untereinander angezeigt wird; 
+	dafür nächste Anweisung hinzu:
+*/
+
+.plugin_labeled ul li {			
+    display:inline;
+}
+
+div.dokuwiki .plugin_labeled ul li.labeled_active a {
+    color: #fff;
+}
+
+div.dokuwiki .plugin_labeled ul li.labeled_inactive a {
+    color: #ccc;
+}
