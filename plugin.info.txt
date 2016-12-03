@@ -1,7 +1,7 @@
 base   htwlabel
 author Leon Todtenhausen
 email  lt12@hotmail.de
-date   2016-11-21
+date   2016-12-03
 name   htwlabel plugin
 desc   Plug in to create labels
-url    http://localhost/dokuwiki/doku.php?
+url    http://www.dokuwiki.org/plugin:htwlabel
