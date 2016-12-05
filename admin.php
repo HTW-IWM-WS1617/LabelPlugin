@@ -10,12 +10,13 @@
 if(!defined('DOKU_INC')) die();
 
 class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
+    private $hlp;
 
     /**
      * @return int sort number in admin menu
      */
     public function getMenuSort() {
-        return FIXME;
+        return 400;
     }
 
     /**
@@ -29,13 +30,17 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
      * Should carry out any processing required by the plugin.
      */
     public function handle() {
+        $this->hlp = plugin_load('helper', 'htwlabel');
+    
     }
 
     /**
      * Render HTML output, e.g. helpful text and a form
      */
     public function html() {
-        ptln('<h1>'.$this->getLang('menu').'</h1>');
+        global $ID;
+        //$labels = $this->hlp->getAllLabels();
+        include dirname(__FILE__) . '/admin_tpl.php';    
     }
 }
 
