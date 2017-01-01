@@ -18,10 +18,9 @@ $lang['menu'] = 'HTW Label Plug-in';
 
 $lang['admin headline'] = "HTW Label Plug-in";
 $lang['admin label name'] = "Label Name";
-$lang['admin label color'] = "Color";
-$lang['admin action'] = "Action";
-$lang['admin create'] = "Create Label";
-$lang['admin delete'] = "Delete Label";
-$lang['admin save'] = "Save changes";
-$lang['admin icon'] = 'Icon';
-$lang['admin initial'] = 'Initial status';
+$lang['admin label color'] = "Farbe";
+$lang['admin action'] = "Aktion";
+$lang['admin create'] = "Label erstellen";
+$lang['admin delete'] = "Label löschen";
+$lang['admin save'] = "Änderungen speichern";
+$lang['admin icon'] = 'Ikone';
