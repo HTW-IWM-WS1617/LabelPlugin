@@ -13,12 +13,14 @@
         <th><?php echo $this->getLang('admin label name')?></th>
         <th><?php echo $this->getLang('admin label color')?></th>
         <th><?php echo $this->getLang('admin icon')?></th>
+        <th><?php echo $this->getLang('admin initial')?></th>
         <th><?php echo $this->getLang('admin action')?></th>
     </tr>
     <tr>
         <td><input type="text" name="newlabel[name]" class="edit" /></td>
         <td><input type="color" name="newlabel[color]" class="edit" /></td>
         <td><input type="" name="newlabel[icon]" class="edit" /></td>
+        <td><input type="radio" name="newlabel[initial]" class="edit" /></td>
         <td><input type="submit" class="button" name="action[create]" value="<?php echo $this->getLang('admin create')?>" /></td>
     </tr>
 <?php //foreach ($labels as $label => $opts): ?>
@@ -34,6 +36,9 @@
         <td>
             <input class="edit" type="text" value="<?php echo $opts['icon'] ?>" name="labels[<?php echo $label ?>][icon]" />
         </td>
+        <td>
+            <input class="edit" type="radio" value="<?php echo $opts['initial'] ?>" name="newlabel[initial]" />
+        </td>        
         <td>
             <input type="submit" name="action[delete][<?php echo $label ?>]" class="button"
                 value="<?php echo $this->getLang('admin delete')?>" />
