@@ -39,7 +39,40 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     }
 
     public function tpl_labels() {
+        global $ID;
+        $all = $this->getAllLabels();
+        if (count($all) === 0) return false;
+        $current = $this->getLabels($ID);
+        $result = '';
+        $result .=  '<div class="plugin_labeled"><ul>';
 
+        $edit = auth_quickaclcheck($ID) >= AUTH_EDIT;
+        foreach ($all as $label => $opts) {
+
+            $active = in_array($label, $current);
+
+            $color = ($active)?$opts['color']:'aaa';
+
+            $result .=  '<li class="labeled_'.($active?'':'in').'active" style="border-color:'.$color.';background-color:'.$color.'">';
+            if ($edit) {
+                $link = wl($ID,
+                    array(
+                        'do' => 'labeled',
+                        action_plugin_labeled_change::$act => $active?'remove':'add',
+                        'label' => $label
+                    )
+                );
+                $title = '';
+                $result .= sprintf('<a href="%s" title="%s">', $link, $title);
+            }
+            $result .=  hsc((isset($this->lang_translation[$label])) ? $this->lang_translation[$label] : $label);
+
+            if ($edit) $result .=  '</a>';
+            $result .=  '</li>';
+        }
+
+        $result .=  '</ul></div>';
+        return $result;
     }
 
     /**
@@ -210,7 +243,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
      * @param boolean $order Ordering number
      * @param string $ns     namespace filter for the label
      */
-    public function createLabel($name, $color, $icon) {
+    public function createLabel($name, $color, $icon=false) {
         global $INFO;
         if (!$INFO['isadmin']) return;
 
