@@ -31,10 +31,9 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         }
         if($db->init('htwlabel', dirname(__FILE__).'/db/')){
        // if($db->init('htwlabel',DOKU_PLUGIN.'htwlabel/db/')){            
-            msg('DB found', 1);
             return $db;
         }
-        msg('DB not found', 1);
+        //msg('DB not found', 1);
         return false;
     }
 
@@ -58,7 +57,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
                 $link = wl($ID,
                     array(
                         'do' => 'labeled',
-                        action_plugin_labeled_change::$act => $active?'remove':'add',
+                        action_plugin_htwlabel_change::$act => $active?'remove':'add',
                         'label' => $label
                     )
                 );
@@ -168,6 +167,16 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
     }
 
+        public function changeicon($label, $newicon) {
+        global $INFO;
+        if (!$INFO['isadmin']) return;
+
+        if (!$this->labelExists($label)) return;
+        $db = $this->getDb();
+        $db->query('UPDATE htwlabels set icon=? WHERE name=?', $newicon, $label);
+
+    }
+
     /**
      * get all labels
      * @param string $id from wiki page id
@@ -208,7 +217,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $db = $this->getDb();
         if ($db !== false) {
-            $res = $db->query('SELECT name color icon FROM htwlabels ORDER BY name');
+            $res = $db->query('SELECT name, color, icon FROM htwlabels ORDER BY name');
 
             $labels = $db->res2arr($res);
 
@@ -243,7 +252,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
      * @param boolean $order Ordering number
      * @param string $ns     namespace filter for the label
      */
-    public function createLabel($name, $color, $icon=false) {
+    public function createLabel($name, $color, $icon) {
         global $INFO;
         if (!$INFO['isadmin']) return;
 

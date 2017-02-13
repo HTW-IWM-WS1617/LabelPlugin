@@ -21,8 +21,8 @@
         <td><input type="" name="newlabel[icon]" class="edit" /></td>
         <td><input type="submit" class="button" name="action[create]" value="<?php echo $this->getLang('admin create')?>" /></td>
     </tr>
-<?php //foreach ($labels as $label => $opts): ?>
-<?php //$label = hsc($label); ?>
+<?php foreach ($labels as $label => $opts): ?>
+<?php $label = hsc($label); ?>
     <tr>
         <td>
             <input class="edit" type="text" value="<?php echo $label ?>" name="labels[<?php echo $label ?>][name]" />
@@ -39,7 +39,7 @@
                 value="<?php echo $this->getLang('admin delete')?>" />
         </td>
     </tr>
-<?php //endforeach; ?>
+<?php endforeach; ?>
 </table>
 
 <input type="submit" name="action[save]" value="<?php echo $this->getLang('admin save')?>" class="button" />

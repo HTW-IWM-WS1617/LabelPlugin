@@ -53,7 +53,7 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
      */
     public function html() {
         global $ID;
-        //$labels = $this->hlp->getAllLabels();
+        $labels = $this->hlp->getAllLabels();
         include dirname(__FILE__) . '/admin_tpl.php';    
     }
 
@@ -85,13 +85,13 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
                 }
             }
 
-            // apply icon$icon number
-           /* if ($labels[$oldName]['icon$iconnr'] != $newValues['icon$icon']) {
-                $this->hlp->changeicon$icon($oldName, $newValues['icon$icon']);
-            } else if (empty($newValues['icon$icon'])) {
-                $this->hlp->changeicon$icon($oldName, 2147483647);
+            // apply icon
+            if ($labels[$oldName]['icon'] != $newValues['icon']) {
+                $this->hlp->changeicon($oldName, $newValues['icon']);
+            } else if (empty($newValues['icon'])) {
+                $this->hlp->changeicon($oldName, $newValues['icon']);
                 $labels = $this->hlp->getAllLabels();
-            }*/
+            }
 
             // apply renaming
             if ($oldName !== $newValues['name'] && !empty($newValues['name'])) {
@@ -115,7 +115,7 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
 
         $name = (isset($_POST['newlabel']['name']))?$_POST['newlabel']['name']:'';
         $color = (isset($_POST['newlabel']['color']))?$_POST['newlabel']['color']:'';
-       // $icon = (isset($_POST['newlabel']['icon']))?$_POST['newlabel']['icon']:'';
+        $icon = (isset($_POST['newlabel']['icon']))?$_POST['newlabel']['icon']:'';
 
        // if (empty($icon)) $icon = null; // maxint - last element
        // $icon = floatval($icon);
@@ -130,7 +130,7 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
             return;
         }
 
-        $this->hlp->createLabel($name, $color);
+        $this->hlp->createLabel($name, $color, $icon);
        // $this->hlp->changeicon$icon($name, $icon);
         msg($this->getLang('label created'));
         $this->hlp->getAllLabels(true);
