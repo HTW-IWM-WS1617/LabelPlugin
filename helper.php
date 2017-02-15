@@ -57,7 +57,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
             if ($edit) {
                 $link = wl($ID,
                     array(
-                        'do' => 'labeled',
+                        'do' => 'htwlabel',
                         action_plugin_htwlabel_change::$act => $active?'remove':'add',
                         'label' => $label
                     )
@@ -190,12 +190,12 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         }
 
         $db = $this->getDb();
-        $res = $db->query('SELECT id FROM htwlabel WHERE id=?', $id);
+        $res = $db->query('SELECT label FROM htwlabel WHERE id=?', $id);
 
         $labels = $db->res2arr($res);
         $result = array();
         foreach ($labels as $label) {
-            $result[] = $label['id'];
+            $result[] = $label['label'];
         }
         return $result;
     }
