@@ -51,6 +51,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
             $active = in_array($label, $current);
 
             $color = ($active)?$opts['color']:'aaa';
+            $icon = $opts['icon'];
 
             $result .=  '<li class="labeled_'.($active?'':'in').'active" style="border-color:'.$color.';background-color:'.$color.'">';
             if ($edit) {
@@ -65,6 +66,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
                 $result .= sprintf('<a href="%s" title="%s">', $link, $title);
             }
             $result .=  hsc((isset($this->lang_translation[$label])) ? $this->lang_translation[$label] : $label);
+            $result .=  ' <i class="fa '.$icon.'"></i>';
 
             if ($edit) $result .=  '</a>';
             $result .=  '</li>';

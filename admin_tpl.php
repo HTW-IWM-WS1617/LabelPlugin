@@ -18,7 +18,13 @@
     <tr>
         <td><input type="text" name="newlabel[name]" class="edit" /></td>
         <td><input type="color" name="newlabel[color]" class="edit" /></td>
-        <td><input type="" name="newlabel[icon]" class="edit" /></td>
+        <td>
+            <input type="radio" name="newlabel[icon]" value="fa-file-o" checked><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input type="radio" name="newlabel[icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input type="radio" name="newlabel[icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i>
+            <!--<input type="radio" name="newlabel[icon]" value="fa-thumbs-up" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <input type="radio" name="newlabel[icon]" value="fa-thumbs-down" ><i class="fa fa-thumbs-down" aria-hidden="true"></i>-->
+        </td>
         <td><input type="submit" class="button" name="action[create]" value="<?php echo $this->getLang('admin create')?>" /></td>
     </tr>
 <?php foreach ($labels as $label => $opts): ?>

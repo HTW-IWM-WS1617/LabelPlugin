@@ -12,7 +12,34 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
      */
     function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'change_action');
+        $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookcss');
     }
+
+    /**
+   * Event handler. Method to include Icon Packages like Font Awesome.
+   *
+   * @param  Doku_Event  &$event
+   */
+  public function _hookcss(Doku_Event &$event, $param) {
+
+    $font_icons = array();
+
+    if ($this->getConf('loadFontAwesome')) {
+      $font_icons[] = $this->getConf('fontAwesomeURL');
+    }
+
+    if ($this->getConf('loadTypicon')) {
+      $font_icons[] = $this->getConf('typiconURL');
+    }
+
+    foreach ($font_icons as $font_icon) {
+      $event->data['link'][] = array(
+        'type'    => 'text/css',
+        'rel'     => 'stylesheet',
+        'href'    => $font_icon);
+    }
+
+  }
 
     function change_action(&$event, $param) {
         if ($event->data !== 'htwlabel') {
