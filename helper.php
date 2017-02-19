@@ -123,6 +123,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         }
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=? AND label=?', $id, $label);
+        addLogEntry(time(true) ,$id, 'e', 'removed label '.$label );
     }
 
     /**
@@ -151,6 +152,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $labels = array_unique($labels);
 
         $this->setLabels($labels, $id);
+        addLogEntry(time(true) ,$id, 'e', 'added label '.$label );
     }
 
     /**
