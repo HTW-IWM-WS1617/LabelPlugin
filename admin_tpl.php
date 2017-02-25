@@ -38,7 +38,20 @@
                 value="<?php echo $opts['color'] ?>" name="labels[<?php echo $label ?>][color]" />
         </td>
         <td>
-            <input class="edit" type="text" value="<?php echo $opts['icon'] ?>" name="labels[<?php echo $label ?>][icon]" />
+            <!--<input class="edit" type="text" value="<?php echo $opts['icon'] ?>" name="labels[<?php echo $label ?>][icon]" />-->
+        <?php if ($opts['icon'] == "fa-file-o"): ?>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o" checked><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i>
+        <?php elseif ($opts['icon'] == "fa-wrench"): ?>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench" checked><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i>
+        <?php else: ?>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check" checked><i class="fa fa-check" aria-hidden="true"></i>        
+        <?php endif; ?>
         </td>
         <td>
             <input type="submit" name="action[delete][<?php echo $label ?>]" class="button"
