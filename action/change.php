@@ -97,8 +97,14 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
         $label = $_REQUEST['label'];
         global $ID;
 
-        $this->hlp->addLabel($label, $ID);
+        $actLabel = $this->hlp->checkPage($ID);
+        if($actLabel){
+             $this->hlp->deleteAllLabel($ID);
+             $this->hlp->addLabel($label, $ID);
 
+        }else{
+            $this->hlp->addLabel($label, $ID);
+        }
     }
 
     private function _set() {

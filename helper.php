@@ -155,6 +155,24 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         addLogEntry(time(true) ,$id, 'e', 'added label '.$label );
     }
 
+
+    /**
+     * check if a page has assigned a label
+     * @param string $label
+     * @param string $id wiki page
+     * @return void
+     */
+    
+    public function checkPage($id) {
+        $db = $this->getDb();
+        $res = $db->query('SELECT label FROM htwlabel WHERE id=?', $id);
+        $activeLabel = $db->res2arr($res);
+        if($activeLabel){
+          return true;
+        }else false;
+
+    }   
+
     /**
      * rename a label
      * @param string $label old label name
@@ -279,4 +297,14 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $db->query('DELETE FROM htwlabels WHERE name=?', $label);
         $db->query('DELETE FROM htwlabel WHERE id=?', $label);
     }
+
+
+    /**
+     * remove all labels from a page
+     * @param string $label label to delete
+     */
+    public function deleteAllLabel($id) {       
+        $db = $this->getDb();
+        $db->query('DELETE FROM htwlabel WHERE id=?', $id);
+    }    
 }
