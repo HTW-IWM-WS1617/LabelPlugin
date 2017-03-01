@@ -24,3 +24,4 @@ $lang['admin create'] = "Label erstellen";
 $lang['admin delete'] = "Label löschen";
 $lang['admin save'] = "Änderungen speichern";
 $lang['admin icon'] = 'Ikone';
+$lang['admin initial'] = 'Initial';

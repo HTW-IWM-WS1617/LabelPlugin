@@ -100,8 +100,13 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
                 } else {
                     msg('name already exists');
                 }
-            }
+            }           
         }
+
+            // apply initial status
+            if (!empty($_POST['initial'])) {
+                $this->hlp->changeinitstatus($_POST['initial']);
+            }        
 
         $this->hlp->getAllLabels(true);
 
@@ -130,7 +135,7 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
             return;
         }
 
-        $this->hlp->createLabel($name, $color, $icon);
+        $this->hlp->createLabel($name, $color, $icon, $initial);
        // $this->hlp->changeicon$icon($name, $icon);
         msg($this->getLang('label created'));
         $this->hlp->getAllLabels(true);

@@ -13,6 +13,7 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
     function register(Doku_Event_Handler $controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'change_action');
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookcss');
+        $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'AFTER', $this, 'set_initial');
     }
 
     /**
@@ -54,6 +55,18 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
         $this->handle();
         global $ACT;
         $ACT = 'show';
+    }
+
+    /* Set initial status at creation of page*/
+    public function set_initial(Doku_Event $event, $param) {
+        if($event->data['changeType'] == 'C'){
+        //if($event->data['changeType'] == 'DOKU_CHANGE_TYPE_CREATE'){  ?  
+            if (is_null($this->hlp)) {
+                $this->hlp = plugin_load('helper', 'htwlabel');
+                $this->hlp->getDb();
+            }
+            $this->_setinitial();
+        }    
     }
 
     /**
@@ -116,18 +129,22 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
     }
 
     private function _create() {
-        foreach (array('label', 'color') as $attr) {
+        foreach (array('label', 'color', 'icon', 'initial') as $attr) {
             if (!isset($_REQUEST[$attr])) return;
             $$attr = $_REQUEST[$attr];
         }
         //$ns = '';
         //if (isset($_REQUEST['ns'])) $ns = $_REQUEST['ns'];
 
-        $icon = $_REQUEST['icon'];
+        //$icon = $_REQUEST['icon'];
 
-        $this->hlp->createLabel($label, $color, $icon);
+        $this->hlp->createLabel($label, $color, $icon, $initial);
     }
 
+    private function _setinitial() {
+      global $ID;
+      $this->hlp->setinitialStat($ID);
+    }
 
 
 }

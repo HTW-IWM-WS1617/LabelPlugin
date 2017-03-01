@@ -187,6 +187,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
     }
 
+//Change icon
         public function changeicon($label, $newicon) {
         global $INFO;
         if (!$INFO['isadmin']) return;
@@ -237,7 +238,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $db = $this->getDb();
         if ($db !== false) {
-            $res = $db->query('SELECT name, color, icon FROM htwlabels ORDER BY name');
+            $res = $db->query('SELECT name, color, icon, initial FROM htwlabels ORDER BY name');
 
             $labels = $db->res2arr($res);
 
@@ -272,7 +273,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
      * @param boolean $order Ordering number
      * @param string $ns     namespace filter for the label
      */
-    public function createLabel($name, $color, $icon) {
+    public function createLabel($name, $color, $icon, $initial) {
         global $INFO;
         if (!$INFO['isadmin']) return;
 
@@ -280,7 +281,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         //$ns = cleanID($ns);
         $db = $this->getDb();
-        $db->query('INSERT INTO htwlabels (name, color, icon) VALUES (?,?,?)', $name, $color, $icon);
+        $db->query('INSERT INTO htwlabels (name, color, icon, initial) VALUES (?,?,?,?)', $name, $color, $icon, $initial);
     }
 
     /**
@@ -304,5 +305,38 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     public function deleteAllLabel($id) {       
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=?', $id);
-    }    
+    }
+
+//Change initial status
+        public function changeinitstatus($label) {
+            global $INFO;
+            if (!$INFO['isadmin']) return;
+
+            if (!$this->labelExists($label)) return;
+            $db = $this->getDb();
+
+            $res = $db->query('SELECT name FROM htwlabels WHERE initial=?', "X");
+            $labels = $db->res2arr($res);
+            $oldInitial =  $labels[0]['name'];
+
+            if($oldInitial == $label) return;
+
+            if ($this->labelExists($oldInitial)){
+               $db->query('UPDATE htwlabels set initial=? WHERE name=?', "", $oldInitial);
+            }
+            $db->query('UPDATE htwlabels set initial=? WHERE name=?', "X", $label);        
+        }
+
+    /**
+     * set initial status at creation
+     */
+    public function setinitialStat($id) {    
+        $db = $this->getDb();                      
+        $res1 = $db->query('SELECT name FROM htwlabels WHERE initial=?', "X");
+        $initlabel = $db->res2arr($res1);
+        $StatInitial =  $initlabel[0]['name'];
+        
+        if(empty($StatInitial)) return;
+        $this->addLabel($StatInitial, $id); 
+    }                   
 }
