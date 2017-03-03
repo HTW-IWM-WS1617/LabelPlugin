@@ -358,11 +358,12 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
             elseif ($file['type'] == 'f'){
                 if (empty($ns)){
                     $id = $file['id'];
+                    $input .= '  * [['.$file['id'].']]  (**'.$this->getActiveLabel($id).'**)'."\n";
                 }
                 else {
                     $id = $ns . ':' . $file['id'];
+                    $input .= '  * [['.$id.']]  (**'.$this->getActiveLabel($id).'**)'."\n";
                 }
-                $input .= '  * '.$file['id'].'  (**'.$this->getActiveLabel($id).'**)'."\n";
             }
         }
     }
