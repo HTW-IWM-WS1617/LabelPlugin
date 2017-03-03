@@ -124,6 +124,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=? AND label=?', $id, $label);
         addLogEntry(time(true) ,$id, 'e', 'removed label '.$label );
+        $this -> createStatusOverview();
     }
 
     /**
@@ -153,6 +154,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $this->setLabels($labels, $id);
         addLogEntry(time(true) ,$id, 'e', 'added label '.$label );
+        $this -> createStatusOverview();
     }
 
 
@@ -216,6 +218,27 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $result = array();
         foreach ($labels as $label) {
             $result[] = $label['label'];
+        }
+        return $result;
+    }
+
+    /**
+     * get the active label of a page 
+     * @param string $id from wiki page id
+     * @return the active label as a string
+     */
+    public function getActiveLabel($id) {
+        if (auth_quickaclcheck($id) < AUTH_READ) {
+            return false;
+        }
+
+        $db = $this->getDb();
+        $res = $db->query('SELECT label FROM htwlabel WHERE id=?', $id);
+
+        $labels = $db->res2arr($res);
+        $result = '';
+        foreach ($labels as $label) {
+            $result = $label['label'];
         }
         return $result;
     }
@@ -306,5 +329,42 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     public function deleteAllLabel($id) {       
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=?', $id);
-    }    
+    }   
+
+    public function createStatusOverview(){
+        $base = 'data/pages';
+        $input = '====== Status Overview ====== '."\n";
+        $lvl = 1;
+        $this -> searchFiles($base, $input, $lvl);
+        saveWikiText('overview', $input, '');
+    }
+
+    public function searchFiles($base, &$input, $lvl)
+    {
+        $directory = substr($base, 11);
+        $ns = utf8_encodeFN(str_replace(':','/',$directory));
+
+        $data = array();
+        search($data,$base,'search_index',array(), '', $lvl);
+        foreach ($data as $file) {
+            for ($x = 1; $x < $file['level'] ; $x++) {
+                $input .= '  ';
+            } 
+            if ($file['type'] == 'd'){
+                $input .= '  * '.$file['id'] ." \n";
+                $new = $base . '/' . $file['id'];
+                $this -> searchFiles($new, $input, $lvl + 1);
+            }
+            elseif ($file['type'] == 'f'){
+                if (empty($ns)){
+                    $id = $file['id'];
+                }
+                else {
+                    $id = $ns . ':' . $file['id'];
+                }
+                $input .= '  * '.$file['id'].'  (**'.$this->getActiveLabel($id).'**)'."\n";
+            }
+        }
+    }
+
 }
