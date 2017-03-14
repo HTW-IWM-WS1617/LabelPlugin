@@ -14,11 +14,14 @@
         <th><?php echo $this->getLang('admin label color')?></th>
         <th><?php echo $this->getLang('admin icon')?></th>
         <th><?php echo $this->getLang('admin initial')?></th>
+        <th><?php echo $this->getLang('admin labelEN')?></th>
+        <th><?php echo $this->getLang('admin labelFR')?></th>
+        <th><?php echo $this->getLang('admin labelES')?></th>
         <th><?php echo $this->getLang('admin action')?></th>
     </tr>
     <tr>
-        <td><input type="text" name="newlabel[name]" class="edit" /></td>
-        <td><input type="color" name="newlabel[color]" class="edit" /></td>
+        <td><input type="text" name="newlabel[name]" class="edit" size="15"/></td>
+        <td><input type="color" name="newlabel[color]" class="edit"/></td>
         <td>
             <input type="radio" name="newlabel[icon]" value="fa-file-o" checked><i class="fa fa-file-o" aria-hidden="true"></i>
             <input type="radio" name="newlabel[icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
@@ -27,24 +30,36 @@
             <input type="radio" name="newlabel[icon]" value="fa-thumbs-down" ><i class="fa fa-thumbs-down" aria-hidden="true"></i>-->
         </td>
         <td><input type="radio" name="newlabel[initial]" value="initial" disabled /></td>
+        <td><input type="text" name="newlabel[labelEN]" class="edit" size="15" /></td>
+        <td><input type="text" name="newlabel[labelFR]" class="edit" size="15" /></td>
+        <td><input type="text" name="newlabel[labelES]" class="edit" size="15" /></td>
         <td><input type="submit" class="button" name="action[create]" value="<?php echo $this->getLang('admin create')?>" /></td>
     </tr>
 <?php foreach ($labels as $label => $opts): ?>
 <?php $label = hsc($label); ?>
     <tr>
         <td>
-            <input class="edit" type="text" value="<?php echo $label ?>" name="labels[<?php echo $label ?>][name]" />
+            <input class="edit" type="text" value="<?php echo $label ?>" name="labels[<?php echo $label ?>][name]"  size="15"/>
         </td>
         <td>
             <input class="edit" style="color: <?php echo $opts['color'] ?>" type="color"
                 value="<?php echo $opts['color'] ?>" name="labels[<?php echo $label ?>][color]" />
         </td>
         <td>
-            <input class="edit" type="text" value="<?php echo $opts['icon'] ?>" name="labels[<?php echo $label ?>][icon]" />
+            <input class="edit" type="text" value="<?php echo $opts['icon'] ?>" name="labels[<?php echo $label ?>][icon]" size="8" />
         </td>
         <td>
             <input class="edit" type="radio" value="<?php echo $label ?>" name="initial" <?php if ($opts['initial'] == "X") echo "checked"; ?> />
-        </td>        
+        </td> 
+        <td>
+            <input class="edit" type="text" value="<?php echo $opts['labelEN'] ?>" name="labels[<?php echo $label ?>][labelEN]" size="15" />
+        </td>
+        <td>
+            <input class="edit" type="text" value="<?php echo $opts['labelFR'] ?>" name="labels[<?php echo $label ?>][labelFR]" size="15" />
+        </td>
+        <td>
+            <input class="edit" type="text" value="<?php echo $opts['labelES'] ?>" name="labels[<?php echo $label ?>][labelES]" size="15" />
+        </td>                               
         <td>
             <input type="submit" name="action[delete][<?php echo $label ?>]" class="button"
                 value="<?php echo $this->getLang('admin delete')?>" />

@@ -39,6 +39,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
     public function tpl_labels() {
         global $ID;
+        global $conf;
         $all = $this->getAllLabels();
         if (count($all) === 0) return false;
         $current = $this->getLabels($ID);
@@ -47,6 +48,10 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $edit = auth_quickaclcheck($ID) >= AUTH_EDIT;
         foreach ($all as $label => $opts) {
+            if($conf['lang'] == 'en'){ $labellang = $opts['labelEN']; }
+            elseif($conf['lang'] == 'fr'){ $labellang = $opts['labelFR']; }
+            elseif($conf['lang'] == 'es'){ $labellang = $opts['labelES']; }
+            else{ $labellang = $label; }
 
             $active = in_array($label, $current);
 
@@ -65,7 +70,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
                 $title = '';
                 $result .= sprintf('<a href="%s" title="%s">', $link, $title);
             }
-            $result .=  hsc((isset($this->lang_translation[$label])) ? $this->lang_translation[$label] : $label);
+            $result .=  hsc((isset($this->lang_translation[$labellang])) ? $this->lang_translation[$labellang] : $labellang);
             $result .=  ' <i class="fa '.$icon.'"></i>';
 
             if ($edit) $result .=  '</a>';
@@ -238,7 +243,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $db = $this->getDb();
         if ($db !== false) {
-            $res = $db->query('SELECT name, color, icon, initial FROM htwlabels ORDER BY name');
+            $res = $db->query('SELECT name, color, icon, initial, labelEN, labelFR, labelES FROM htwlabels ORDER BY name');
 
             $labels = $db->res2arr($res);
 
@@ -273,7 +278,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
      * @param boolean $order Ordering number
      * @param string $ns     namespace filter for the label
      */
-    public function createLabel($name, $color, $icon, $initial) {
+    public function createLabel($name, $color, $icon, $initial, $labelEN, $labelFR, $labelES) {
         global $INFO;
         if (!$INFO['isadmin']) return;
 
@@ -281,7 +286,8 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         //$ns = cleanID($ns);
         $db = $this->getDb();
-        $db->query('INSERT INTO htwlabels (name, color, icon, initial) VALUES (?,?,?,?)', $name, $color, $icon, $initial);
+        $db->query('INSERT INTO htwlabels (name, color, icon, initial, labelEN, labelFR, labelES) VALUES (?,?,?,?,?,?,?)', 
+        $name, $color, $icon, $initial, $labelEN, $labelFR, $labelES);
     }
 
     /**
@@ -338,5 +344,38 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         
         if(empty($StatInitial)) return;
         $this->addLabel($StatInitial, $id); 
-    }                   
+    } 
+
+//Change LabelEN
+        public function changeLabelEN($label, $newtrans) {
+        global $INFO;
+        if (!$INFO['isadmin']) return;
+
+        if (!$this->labelExists($label)) return;
+        $db = $this->getDb();
+        $db->query('UPDATE htwlabels set labelEN=? WHERE name=?', $newtrans, $label);
+
+    }
+
+//Change LabelFR
+        public function changeLabelFR($label, $newtrans) {
+        global $INFO;
+        if (!$INFO['isadmin']) return;
+
+        if (!$this->labelExists($label)) return;
+        $db = $this->getDb();
+        $db->query('UPDATE htwlabels set labelFR=? WHERE name=?', $newtrans, $label);
+
+    }
+
+//Change LabelES
+        public function changeLabelES($label, $newtrans) {
+        global $INFO;
+        if (!$INFO['isadmin']) return;
+
+        if (!$this->labelExists($label)) return;
+        $db = $this->getDb();
+        $db->query('UPDATE htwlabels set labelES=? WHERE name=?', $newtrans, $label);
+
+    }                           
 }

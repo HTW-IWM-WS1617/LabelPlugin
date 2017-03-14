@@ -25,3 +25,6 @@ $lang['admin delete'] = "Delete Label";
 $lang['admin save'] = "Save changes";
 $lang['admin icon'] = 'Icon';
 $lang['admin initial'] = 'Initial';
+$lang['admin labelES'] = 'Name in Spanish';
+$lang['admin labelFR'] = 'Name in French';
+$lang['admin labelEN'] = 'Name in English';

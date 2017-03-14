@@ -129,7 +129,7 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
     }
 
     private function _create() {
-        foreach (array('label', 'color', 'icon', 'initial') as $attr) {
+        foreach (array('label', 'color', 'icon', 'initial', 'labelEN', 'labelFR', 'labelES') as $attr) {
             if (!isset($_REQUEST[$attr])) return;
             $$attr = $_REQUEST[$attr];
         }
@@ -138,7 +138,7 @@ class action_plugin_htwlabel_change extends DokuWiki_Action_Plugin {
 
         //$icon = $_REQUEST['icon'];
 
-        $this->hlp->createLabel($label, $color, $icon, $initial);
+        $this->hlp->createLabel($label, $color, $icon, $initial, $labelEN, $labelFR, $labelES);
     }
 
     private function _setinitial() {
