@@ -24,3 +24,5 @@ $lang['admin create'] = "Label erstellen";
 $lang['admin delete'] = "Label löschen";
 $lang['admin save'] = "Änderungen speichern";
 $lang['admin icon'] = 'Ikone';
+$lang['add exclusion'] = "Exclude Namespace/ID";
+$lang['delete exclusion'] = "Include Namespace/ID";

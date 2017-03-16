@@ -1,0 +1,1 @@
+CREATE TABLE htwlabel_excluded ( name, PRIMARY KEY(name) );

@@ -44,6 +44,12 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
                     $this->applyChanges();
                     $this->create(true);
                 }
+                if (isset($_POST['action']['add ex'])) {
+                    $this->addExclusion();
+                } 
+                if (isset($_POST['action']['del ex'])) {
+                    $this->deleteExclusion();
+                } 
             }
         }
     }
@@ -54,6 +60,7 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
     public function html() {
         global $ID;
         $labels = $this->hlp->getAllLabels();
+        $excluded = $this->hlp->getAllExcluded();
         include dirname(__FILE__) . '/admin_tpl.php';    
     }
 
@@ -164,6 +171,29 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Try to delete an exclusion
+     */
+    private function deleteExclusion() {
+        dbglog("admin deleteExclusion");
+
+        $exclusions = array_keys($_POST['action']['del ex']);
+        foreach ($exclusions as $exclusion) {
+            $this->hlp->deleteExclusion($exclusion);
+        }
+    }
+
+    
+    private function addExclusion(){
+        if (!isset($_POST['newexclusion'])) return;
+
+        $name = (isset($_POST['newexclusion']['name']))?$_POST['newexclusion']['name']:'';
+
+        $this->hlp->addExclusion($name);
+        msg($this->getLang('exclusion added'));
+        // $this->hlp->getAllLabels(true);
     }
 
 }

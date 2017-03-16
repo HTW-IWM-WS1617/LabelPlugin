@@ -63,3 +63,34 @@
 
 <input type="submit" name="action[save]" value="<?php echo $this->getLang('admin save')?>" class="button" />
 </form>
+
+<br>
+<br>
+<br>
+
+<form action="<?php echo script()?>" method="post">
+    <div class="no">
+        <input type="hidden" name="do" value="admin" />
+        <input type="hidden" name="page" value="htwlabel" />
+        <input type="hidden" name="id" value="<?php echo hsc($ID)?>" />
+        <input type="hidden" name="sectok" value="<?php echo hsc(getSecurityToken())?>" />
+    </div>
+
+<table class="inline">
+    <tr>
+        <td><input type="text" name="newexclusion[name]" class="edit" /></td>
+        <td><input type="submit" class="button" name="action[add ex]" value="<?php echo $this->getLang('add exclusion')?>" /></td>
+    </tr>
+    <?php foreach ($excluded as $ex => $opts2): ?>
+        <tr>
+            <td>
+                <p><?php echo $opts2?></p>
+            </td>
+            <td>
+                <input type="submit" name="action[del ex][<?php echo $opts2 ?>]" class="button" value="<?php echo $this->getLang('delete exclusion')?>" />
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+</form>
+

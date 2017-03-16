@@ -38,42 +38,44 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     }
 
     public function tpl_labels() {
-        global $ID;
-        $all = $this->getAllLabels();
-        if (count($all) === 0) return false;
-        $current = $this->getLabels($ID);
-        $result = '';
-        $result .=  '<div class="plugin_labeled"><ul>';
+        if ($this->checkForExcludedNamespace()){
+            global $ID;
+            $all = $this->getAllLabels();
+            if (count($all) === 0) return false;
+            $current = $this->getLabels($ID);
+            $result = '';
+            $result .=  '<div class="plugin_labeled"><ul>';
 
-        $edit = auth_quickaclcheck($ID) >= AUTH_EDIT;
-        foreach ($all as $label => $opts) {
+            $edit = auth_quickaclcheck($ID) >= AUTH_EDIT;
+            foreach ($all as $label => $opts) {
 
-            $active = in_array($label, $current);
+                $active = in_array($label, $current);
 
-            $color = ($active)?$opts['color']:'aaa';
-            $icon = $opts['icon'];
+                $color = ($active)?$opts['color']:'aaa';
+                $icon = $opts['icon'];
 
-            $result .=  '<li class="labeled_'.($active?'':'in').'active" style="border-color:'.$color.';background-color:'.$color.'">';
-            if ($edit) {
-                $link = wl($ID,
-                    array(
-                        'do' => 'htwlabel',
-                        action_plugin_htwlabel_change::$act => $active?'remove':'add',
-                        'label' => $label
-                    )
-                );
-                $title = '';
-                $result .= sprintf('<a href="%s" title="%s">', $link, $title);
+                $result .=  '<li class="labeled_'.($active?'':'in').'active" style="border-color:'.$color.';background-color:'.$color.'">';
+                if ($edit) {
+                    $link = wl($ID,
+                        array(
+                            'do' => 'htwlabel',
+                            action_plugin_htwlabel_change::$act => $active?'remove':'add',
+                            'label' => $label
+                        )
+                    );
+                    $title = '';
+                    $result .= sprintf('<a href="%s" title="%s">', $link, $title);
+                }
+                $result .=  hsc((isset($this->lang_translation[$label])) ? $this->lang_translation[$label] : $label);
+                $result .=  ' <i class="fa '.$icon.'"></i>';
+
+                if ($edit) $result .=  '</a>';
+                $result .=  '</li>';
             }
-            $result .=  hsc((isset($this->lang_translation[$label])) ? $this->lang_translation[$label] : $label);
-            $result .=  ' <i class="fa '.$icon.'"></i>';
 
-            if ($edit) $result .=  '</a>';
-            $result .=  '</li>';
+            $result .=  '</ul></div>';
+            return $result;
         }
-
-        $result .=  '</ul></div>';
-        return $result;
     }
 
     /**
@@ -366,6 +368,82 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
                 }
             }
         }
+    }
+
+    /**
+     * check if a namespace /ID is already excluded
+     * @param string $name to check
+     * @return boolean true if it is excluded
+     */
+    public function exclusionExists($name) {
+        $exclusions = $this->getAllExcluded();
+        return in_array($name, $exclusions);
+    }
+
+    /**
+     * add a new namespace / ID that should be excluded
+     * @param string $name   name of namespace / ID
+     */
+    public function addExclusion($name) {
+        global $INFO;
+        if (!$INFO['isadmin']) return;
+
+        if ($this->exclusionExists($name)) return;
+
+        //$ns = cleanID($ns);
+        $db = $this->getDb();
+        $db->query('INSERT INTO htwlabel_excluded (name) VALUES (?)', $name);
+    }
+
+    public function checkForExcludedNamespace(){
+        global $ID;
+
+        // TODO: DB query for excluded IDs and namespaces
+
+        // $db = $this->getDb();
+        // $res = $db->query('SELECT name FROM htwlabel_excluded');
+
+        $array = $this -> getAllExcluded();
+
+        // checks, if page is directly excluded by it's ID
+        if (in_array($ID, $array)) return false;
+        
+        $akt = $ID;
+
+        // checks if page is inside a excluded namespace
+        while (getNS($akt) != null){
+            if (in_array(getNS($akt), $array)) return false;
+            $akt = getNS($akt);
+        }
+
+        // neither page nor its namespaces are excluded
+        return true;
+    }
+
+    public function getAllExcluded(){
+        $db = $this->getDb();
+        $res = $db->query('SELECT name FROM htwlabel_excluded');
+        $excluded = $db->res2arr($res);
+
+        $array = array();
+
+        foreach ($excluded as $ex) {
+            $array[] = $ex['name'];
+        }
+
+        return $array;
+    }
+
+    /**
+     * delete a exclusion
+     * @param string $exclusion exclusion to delete
+     */
+    public function deleteExclusion($exclusion) {
+        global $INFO;
+        if (!$INFO['isadmin']) return;
+        dbglog("helper deleteExclusion");
+        $db = $this->getDb();
+        $db->query('DELETE FROM htwlabel_excluded WHERE name=?', $exclusion);
     }
 
 }
