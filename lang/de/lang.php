@@ -26,3 +26,7 @@ $lang['admin save'] = "Änderungen speichern";
 $lang['admin icon'] = 'Ikone';
 $lang['add exclusion'] = "Namespace/ID ausschließen";
 $lang['delete exclusion'] = "Namespace/ID freigeben";
+$lang['admin initial'] = 'Initial';
+$lang['admin labelES'] = 'Name auf Spanisch';
+$lang['admin labelFR'] = 'Name auf Französisch';
+$lang['admin labelEN'] = 'Name auf Englisch';
