@@ -338,8 +338,11 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     public function deleteAllLabel($id) {       
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=?', $id);
-    }   
+    } 
 
+    /**
+    * Creates the status overview page 
+    */
     public function createStatusOverview(){
         $base = 'data/pages';
         $input = '====== Status Overview ====== '."\n";
@@ -348,6 +351,12 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         saveWikiText('overview', $input, '');
     }
 
+    /**
+    * Searches for page files and checks their status to create a directory tree (index)
+    * @param string $base - the base directory string 
+    * @param string $input - content for directory tree that is saved in overview page
+    * @param int    $lvl   - Current recursion depht
+    */
     public function searchFiles($base, &$input, $lvl)
     {
         $directory = substr($base, 11);
@@ -402,13 +411,11 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $db->query('INSERT INTO htwlabel_excluded (name) VALUES (?)', $name);
     }
 
+    /**
+    * Check, if a namespace or ID is excluded
+    */
     public function checkForExcludedNamespace(){
         global $ID;
-
-        // TODO: DB query for excluded IDs and namespaces
-
-        // $db = $this->getDb();
-        // $res = $db->query('SELECT name FROM htwlabel_excluded');
 
         $array = $this -> getAllExcluded();
 
@@ -427,6 +434,9 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         return true;
     }
 
+    /**
+    * Get all excluded namespaces and IDs
+    */
     public function getAllExcluded(){
         $db = $this->getDb();
         $res = $db->query('SELECT name FROM htwlabel_excluded');
@@ -448,7 +458,6 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     public function deleteExclusion($exclusion) {
         global $INFO;
         if (!$INFO['isadmin']) return;
-        dbglog("helper deleteExclusion");
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel_excluded WHERE name=?', $exclusion);
     }

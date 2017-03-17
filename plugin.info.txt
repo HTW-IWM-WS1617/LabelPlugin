@@ -1,6 +1,6 @@
 base   htwlabel
-author Leon Todtenhausen
-email  lt12@hotmail.de
+author Grecia Graterol, Katharina Krause, Anna Zagorski, Leon Todtenhausen, Ricky Thiermann
+email  htw_label@fraunhofer.de
 date   2016-12-03
 name   htwlabel plugin
 desc   Plug in to create labels

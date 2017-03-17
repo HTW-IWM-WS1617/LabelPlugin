@@ -200,15 +200,15 @@ class admin_plugin_htwlabel extends DokuWiki_Admin_Plugin {
      * Try to delete an exclusion
      */
     private function deleteExclusion() {
-        dbglog("admin deleteExclusion");
-
         $exclusions = array_keys($_POST['action']['del ex']);
         foreach ($exclusions as $exclusion) {
             $this->hlp->deleteExclusion($exclusion);
         }
     }
 
-    
+    /**
+     * Add a namepsace or ID that should be excluded
+     */
     private function addExclusion(){
         if (!isset($_POST['newexclusion'])) return;
 
