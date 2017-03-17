@@ -1,6 +1,6 @@
-htwlabel Plugin for DokuWiki
+# htwlabel Plugin for DokuWiki
 
-Plug in to create and manage labels for dokuwiki. Based on labeled plug in (https://www.dokuwiki.org/plugin:labeled).
+Plug in to create and manage labels for dokuwiki. Based on [labeled plug in](https://www.dokuwiki.org/plugin:labeled).
 
 All documentation for this plugin can be found at
 http://localhost/dokuwiki/doku.php?
@@ -11,6 +11,7 @@ will not work!
 
 To display the labels, add this code directly into your template's main.php:
 
+```php
 <?php
     //show labels only if user has access to page. Works on wikis with disabled acl too.
     if (auth_quickaclcheck(getID()) >= AUTH_READ) {
@@ -22,6 +23,7 @@ To display the labels, add this code directly into your template's main.php:
         }
     }
 ?>
+```
 
 Please refer to http://www.dokuwiki.org/plugins for additional info
 on how to install plugins in DokuWiki.
