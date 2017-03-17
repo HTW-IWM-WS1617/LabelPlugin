@@ -9,7 +9,7 @@ If you install this plugin manually, make sure it is installed in
 lib/plugins/htwlabel/ - if the folder is called different it
 will not work!
 
-To display the labels, add this code directly into your template's main.php:
+To display the labels, add this code directly into your template's ```main.php```:
 
 ```php
 <?php
