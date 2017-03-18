@@ -146,6 +146,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=?', $id);
+        $this -> createStatusOverview();
     }
 
     /**
@@ -281,21 +282,6 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
             return $this->labels;
         }else{ msg('Es gibt keine Tabelle vorhanden', -1); }
-    }
-
-    /**
-     * Change the order of the labels - Irrelevant for HTWLabel
-     *
-     * @param string $name label name to change
-     * @param float $order ordering number
-     */
-    public function changeOrder($name, $order) {
-
-    }
-
-    //  Irrelevant for HTWLabel         
-    public function cmpOrder($a, $b) {
-
     }
 
     /**
