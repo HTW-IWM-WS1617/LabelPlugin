@@ -147,6 +147,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
         $db = $this->getDb();
         $db->query('DELETE FROM htwlabel WHERE id=?', $id);
+        $this -> createStatusOverview();
     }
 
     /**
@@ -237,6 +238,8 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
      * @return the active label as a string
      */
     public function getActiveLabel($id) {
+        global $conf;
+        
         if (auth_quickaclcheck($id) < AUTH_READ) {
             return false;
         }
@@ -248,6 +251,34 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $result = '';
         foreach ($labels as $label) {
             $result = $label['label'];
+        }
+        switch ($conf['lang']){
+            case 'en':
+                $trans = $db->query('SELECT labelEN FROM htwlabels WHERE name=?', $result);
+                $translations = $db->res2arr($trans);
+                $result = '';
+                foreach ($translations as $translation) {
+                    $result = $translation['labelEN'];
+                }
+                return $result;
+            case 'fr':
+                $trans = $db->query('SELECT labelFR FROM htwlabels WHERE name=?', $result);
+                $translations = $db->res2arr($trans);
+                $result = '';
+                foreach ($translations as $translation) {
+                    $result = $translation['labelFR'];
+                }
+                return $result;
+            case 'es':
+                $trans = $db->query('SELECT labelES FROM htwlabels WHERE name=?', $result);
+                $translations = $db->res2arr($trans);
+                $result = '';
+                foreach ($translations as $translation) {
+                    $result = $translation['labelES'];
+                }
+                return $result;
+            default:
+                return $result;
         }
         return $result;
     }
@@ -282,21 +313,6 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
 
             return $this->labels;
         }else{ msg('Es gibt keine Tabelle vorhanden', -1); }
-    }
-
-    /**
-     * Change the order of the labels - Irrelevant for HTWLabel
-     *
-     * @param string $name label name to change
-     * @param float $order ordering number
-     */
-    public function changeOrder($name, $order) {
-
-    }
-
-    //  Irrelevant for HTWLabel         
-    public function cmpOrder($a, $b) {
-
     }
 
     /**
