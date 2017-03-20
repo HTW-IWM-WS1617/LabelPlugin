@@ -237,6 +237,8 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
      * @return the active label as a string
      */
     public function getActiveLabel($id) {
+        global $conf;
+        
         if (auth_quickaclcheck($id) < AUTH_READ) {
             return false;
         }
@@ -248,6 +250,34 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
         $result = '';
         foreach ($labels as $label) {
             $result = $label['label'];
+        }
+        switch ($conf['lang']){
+            case 'en':
+                $trans = $db->query('SELECT labelEN FROM htwlabels WHERE name=?', $result);
+                $translations = $db->res2arr($trans);
+                $result = '';
+                foreach ($translations as $translation) {
+                    $result = $translation['labelEN'];
+                }
+                return $result;
+            case 'fr':
+                $trans = $db->query('SELECT labelFR FROM htwlabels WHERE name=?', $result);
+                $translations = $db->res2arr($trans);
+                $result = '';
+                foreach ($translations as $translation) {
+                    $result = $translation['labelFR'];
+                }
+                return $result;
+            case 'es':
+                $trans = $db->query('SELECT labelES FROM htwlabels WHERE name=?', $result);
+                $translations = $db->res2arr($trans);
+                $result = '';
+                foreach ($translations as $translation) {
+                    $result = $translation['labelES'];
+                }
+                return $result;
+            default:
+                return $result;
         }
         return $result;
     }
