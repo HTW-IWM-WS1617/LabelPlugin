@@ -40,6 +40,7 @@ class helper_plugin_htwlabel extends DokuWiki_Plugin {
     public function tpl_labels() {
         if ($this->checkForExcludedNamespace()){
             global $ID;
+            global $conf;
             $all = $this->getAllLabels();
             if (count($all) === 0) return false;
             $current = $this->getLabels($ID);
