@@ -20,26 +20,27 @@
         <th><?php echo $this->getLang('admin action')?></th>
     </tr>
     <tr>
-        <td><input type="text" name="newlabel[name]" class="edit" size="15"/></td>
+        <td><input type="text" name="newlabel[name]" class="edit" size="10"/></td>
         <td><input type="color" name="newlabel[color]" class="edit"/></td>
         <td>
             <input type="radio" name="newlabel[icon]" value="fa-file-o" checked><i class="fa fa-file-o" aria-hidden="true"></i>
             <input type="radio" name="newlabel[icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
-            <input type="radio" name="newlabel[icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i>
-            <!--<input type="radio" name="newlabel[icon]" value="fa-thumbs-up" ><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-            <input type="radio" name="newlabel[icon]" value="fa-thumbs-down" ><i class="fa fa-thumbs-down" aria-hidden="true"></i>-->
+            <input type="radio" name="newlabel[icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input type="radio" name="newlabel[icon]" value="fa-pencil" ><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input type="radio" name="newlabel[icon]" value="fa-file-text-o" ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input type="radio" name="newlabel[icon]" value="fa-paper-plane-o" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
         </td>
         <td><input type="radio" name="newlabel[initial]" value="initial" disabled /></td>
-        <td><input type="text" name="newlabel[labelEN]" class="edit" size="15" /></td>
-        <td><input type="text" name="newlabel[labelFR]" class="edit" size="15" /></td>
-        <td><input type="text" name="newlabel[labelES]" class="edit" size="15" /></td>
+        <td><input type="text" name="newlabel[labelEN]" class="edit" size="10" /></td>
+        <td><input type="text" name="newlabel[labelFR]" class="edit" size="10" /></td>
+        <td><input type="text" name="newlabel[labelES]" class="edit" size="10" /></td>
         <td><input type="submit" class="button" name="action[create]" value="<?php echo $this->getLang('admin create')?>" /></td>
     </tr>
 <?php foreach ($labels as $label => $opts): ?>
 <?php $label = hsc($label); ?>
     <tr>
         <td>
-            <input class="edit" type="text" value="<?php echo $label ?>" name="labels[<?php echo $label ?>][name]"  size="15"/>
+            <input class="edit" type="text" value="<?php echo $label ?>" name="labels[<?php echo $label ?>][name]"  size="10"/>
         </td>
         <td>
             <input class="edit" style="color: <?php echo $opts['color'] ?>" type="color"
@@ -50,28 +51,58 @@
         <?php if ($opts['icon'] == "fa-file-o"): ?>
             <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o" checked><i class="fa fa-file-o" aria-hidden="true"></i>
             <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
-            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-pencil"><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-text-o"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-paper-plane-o"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
         <?php elseif ($opts['icon'] == "fa-wrench"): ?>
             <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
             <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench" checked><i class="fa fa-wrench" aria-hidden="true"></i>
-            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check"><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-pencil"><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-text-o"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-paper-plane-o"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+        <?php elseif ($opts['icon'] == "fa-check"): ?>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check" checked><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-pencil"><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-text-o"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-paper-plane-o"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+        <?php elseif ($opts['icon'] == "fa-pencil"): ?>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check" ><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-pencil" checked><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-text-o"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-paper-plane-o"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>  
+        <?php elseif ($opts['icon'] == "fa-file-text-o"): ?>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check" ><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-pencil"><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-text-o" checked><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-paper-plane-o"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>  
         <?php else: ?>
             <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-o"><i class="fa fa-file-o" aria-hidden="true"></i>
             <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-wrench"><i class="fa fa-wrench" aria-hidden="true"></i>
-            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check" checked><i class="fa fa-check" aria-hidden="true"></i>        
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-check" ><i class="fa fa-check" aria-hidden="true"></i><br>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-pencil"><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-file-text-o"><i class="fa fa-file-text-o" aria-hidden="true"></i>
+            <input class="edit" type="radio" name="labels[<?php echo $label ?>][icon]" value="fa-paper-plane-o" checked><i class="fa fa-paper-plane-o" aria-hidden="true"></i>          
         <?php endif; ?>
         </td>
         <td>
             <input class="edit" type="radio" value="<?php echo $label ?>" name="initial" <?php if ($opts['initial'] == "X") echo "checked"; ?> />
         </td> 
         <td>
-            <input class="edit" type="text" value="<?php echo $opts['labelEN'] ?>" name="labels[<?php echo $label ?>][labelEN]" size="15" />
+            <input class="edit" type="text" value="<?php echo $opts['labelEN'] ?>" name="labels[<?php echo $label ?>][labelEN]" size="10" />
         </td>
         <td>
-            <input class="edit" type="text" value="<?php echo $opts['labelFR'] ?>" name="labels[<?php echo $label ?>][labelFR]" size="15" />
+            <input class="edit" type="text" value="<?php echo $opts['labelFR'] ?>" name="labels[<?php echo $label ?>][labelFR]" size="10" />
         </td>
         <td>
-            <input class="edit" type="text" value="<?php echo $opts['labelES'] ?>" name="labels[<?php echo $label ?>][labelES]" size="15" />
+            <input class="edit" type="text" value="<?php echo $opts['labelES'] ?>" name="labels[<?php echo $label ?>][labelES]" size="10" />
         </td>                               
         <td>
             <input type="submit" name="action[delete][<?php echo $label ?>]" class="button"
@@ -87,7 +118,7 @@
 <br>
 <br>
 <br>
-
+<h1>Namensräume/Seiten ausschließen</h1>
 <form action="<?php echo script()?>" method="post">
     <div class="no">
         <input type="hidden" name="do" value="admin" />
